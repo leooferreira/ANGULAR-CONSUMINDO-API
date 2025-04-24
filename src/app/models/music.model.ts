@@ -1,7 +1,6 @@
-export type Music = {
-  id: number,
+export interface Music {
+  id?: number,
   author: string,
-  text: string
+  text: string,
+  destacada?: boolean
 }
-
-export type MusicCadastrar = Omit<Music, 'id'>;

@@ -1,25 +1,26 @@
+<app-top-bar [music]="minhaMusicaSelecionada" (destacar)="minhaMusicaSelecionada.destacada = $event"></app-top-bar>
 <div class="container">
   <form>
     <div>
       <label>Id</label>
       <input type="text" disabled [(ngModel)]="id" name="id">
     </div>
-    
+
     <div>
       <label>Author</label>
       <input type="text" [(ngModel)]="autor" name="autor">
     </div>
-    
+
     <div>
       <label>Musica</label>
       <input type="text" [(ngModel)]="musica" name="musica">
     </div>
-    
-    <button (click)="buttonClick()"> 
-      {{ id ? 'Salvar' : 'Criar' }}  
+
+    <button (click)="buttonClick()">
+      {{ id ? 'Salvar' : 'Criar' }}
     </button>
   </form>
-  
+
   <table>
     <thead>
       <th> Id </th>
@@ -27,15 +28,15 @@
       <th> Musica </th>
       <th> ... </th>
     </thead>
-  
+
     <tbody>
-      <tr *ngFor="let musica of musicas$ | async">
+      <tr [class.linha-destaque]="musica.destacada" *ngFor="let musica of musicas$ | async">
         <td> {{ musica.id }} </td>
-        <td> {{ musica.author }} </td>
+        <td (click)="selecionar(musica)"> {{ musica.author }} </td>
         <td> {{ musica.text }} </td>
-        <td> 
-          <span (click)="preencherCampos(musica)" > alterar </span> 
-          <span (click)="remover(musica.id!)" > remover </span> 
+        <td>
+          <span (click)="preencherCampos(musica)"> alterar </span>
+          <span (click)="remover(musica.id!)"> remover </span>
         </td>
       </tr>
 

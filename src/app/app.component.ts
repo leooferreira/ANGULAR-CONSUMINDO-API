@@ -11,53 +11,60 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent {
   title = 'tutoriais';
+  minhaMusicaSelecionada!: Music;
 
-  // musicas: Music[] = []
+  // musicas: Music[] = [];
   musicas$ = new Observable<Music[]>();
 
-  // form
   id = '';
-  musica = 'eu sou uma musica';
+  musica = '';
   autor = '';
 
-  constructor(private musicService: MusicService){
+
+
+  constructor(private MusicService: MusicService) {
     this.obterMusicasCadastradas();
   }
 
   obterMusicasCadastradas(){
-    // this.musicService.obterMusicas()
-    //   .subscribe(musicas => this.musicas = musicas)
+    // this.Musicservice.obterMusicas()
+    // .subscribe(musicas => this.musicas = musicas);
 
-    this.musicas$ = this.musicService.obterMusicas();
+    this.musicas$ = this.MusicService.obterMusicas();
   }
 
   buttonClick(){
-    if (!this.musica || !this.autor)
+    if (!this.musica || !this.autor) 
       return;
 
-    if (this.id) {
+    if(this.id){
       this.atualizar();
       return;
     }
 
-    this.musicService.cadastrarMusica({ author: this.autor, text: this.musica })
-      .subscribe(_ => this.obterMusicasCadastradas())
+      this.MusicService.cadastrarMusica({ author: this.autor, text: this.musica })
+      .subscribe(() => this.obterMusicasCadastradas());
   }
 
   atualizar(){
-    this.musicService.editarMusica({ 
-      id: parseInt(this.id), author: this.autor, text: this.musica })
-    .subscribe(_ => this.obterMusicasCadastradas());
+    this.MusicService.editarMusica({ id: parseInt(this.id), author: this.autor, text: this.musica })
+    .subscribe(() => this.obterMusicasCadastradas());
   }
 
   preencherCampos(musica: Music){
     this.id = musica.id!.toString();
     this.musica = musica.text;
     this.autor = musica.author;
+
   }
 
   remover(id: number){
-    this.musicService.remover(id)
-      .subscribe(_ => this.obterMusicasCadastradas());
+    this.MusicService.remover(id)
+    .subscribe(() => this.obterMusicasCadastradas());
   }
+
+  selecionar(musica: Music) {
+    this.minhaMusicaSelecionada = musica //função para selecionar a musica que será exibida no componente filho
+  }
+
 }

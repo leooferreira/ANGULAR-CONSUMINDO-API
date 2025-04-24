@@ -1,0 +1,6 @@
+<p>{{ musicaSelecionada?.author ?? 'Nenhuma musica selecionada'}}
+    <small *ngIf="musicaSelecionada" (click)="destacarMusica(musicaSelecionada)">Clique aqui para destacar a musica na
+        lista</small>
+</p>
+<!-- executa quando for nula ou undefined  ?? 
+ executa quando é falso || -->
